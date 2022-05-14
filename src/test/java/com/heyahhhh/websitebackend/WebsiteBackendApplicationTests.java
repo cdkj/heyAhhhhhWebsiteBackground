@@ -9,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class WebsiteBackendApplicationTests {
 
     @Test
-    void contextLoads() {
-        new LyricsServiceImpl().addSongFromFile("", "");
-    }
+    void contextLoads() {}
 
 }

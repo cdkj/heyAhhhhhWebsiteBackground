@@ -6,6 +6,7 @@ import com.heyahhhh.websitebackend.repository.LyricsRepository;
 import com.heyahhhh.websitebackend.repository.SongsRepository;
 import com.heyahhhh.websitebackend.service.LyricsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -19,6 +20,9 @@ public class LyricsServiceImpl implements LyricsService {
 
     @Autowired
     private SongsRepository songsRepository;
+
+    @Value("${data.lyrics}")
+    private String dataDir;
 
     @Override
     public boolean initializeDatabase() {
@@ -34,8 +38,9 @@ public class LyricsServiceImpl implements LyricsService {
             return false;
         }
         else {
+//            System.out.println(new File(dataDir).getAbsolutePath());
             try {
-                BufferedReader br = new BufferedReader(new FileReader("lyrics/" + singer + "/" + song + ".txt"));
+                BufferedReader br = new BufferedReader(new FileReader(dataDir + singer + "/" + song + ".txt"));
                 songsRepository.save(new SongDO(song, singer));
                 Long songID  = songsRepository.findIDByNameAndSinger(song, singer);
                 Set<String> lyricTexts = new TreeSet<>(); // remove duplicated text

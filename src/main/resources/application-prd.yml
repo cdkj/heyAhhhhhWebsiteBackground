@@ -22,4 +22,4 @@ hometown:
   desc: I'm living in ${hometown.province} ${hometown.city}
 
 data:
-  lyrics: "/home/ubuntu/data/heyAhhhhhWebsite/lyrics/"
+  lyrics: "jar"

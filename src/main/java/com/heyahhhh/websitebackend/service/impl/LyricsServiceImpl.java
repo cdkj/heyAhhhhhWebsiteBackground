@@ -7,6 +7,8 @@ import com.heyahhhh.websitebackend.repository.SongsRepository;
 import com.heyahhhh.websitebackend.service.LyricsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -38,9 +40,14 @@ public class LyricsServiceImpl implements LyricsService {
             return false;
         }
         else {
-//            System.out.println(new File(dataDir).getAbsolutePath());
             try {
-                BufferedReader br = new BufferedReader(new FileReader(dataDir + singer + "/" + song + ".txt"));
+                BufferedReader br;
+                if (dataDir.equals("jar")){
+                    br = new BufferedReader(new InputStreamReader(new ClassPathResource("lyrics/" + singer + "/" + song + ".txt").getInputStream()));
+                }
+                else {
+                    br = new BufferedReader(new FileReader(dataDir + singer + "/" + song + ".txt"));
+                }
                 songsRepository.save(new SongDO(song, singer));
                 Long songID  = songsRepository.findIDByNameAndSinger(song, singer);
                 Set<String> lyricTexts = new TreeSet<>(); // remove duplicated text
